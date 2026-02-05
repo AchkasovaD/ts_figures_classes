@@ -71,8 +71,12 @@ export class Rectangle implements Figure {
     public b: number,
     public shape: Shape = 'rectangle',
   ) {
-    if (a <= 0 || b <= 0) {
-      throw new Error('the length of side is 0 or negative');
+    if (a <= 0) {
+      throw new Error('the length of side a is 0 or negative');
+    }
+
+    if (b <= 0) {
+      throw new Error('the length of side b is 0 or negative');
     }
   }
 
