@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 type Shape = 'triangle' | 'circle' | 'rectangle';
 type Color = 'red' | 'green' | 'blue';
 
@@ -10,27 +11,39 @@ export interface Figure {
 export class Triangle implements Figure {
   constructor(
     public color: Color,
-    public a = 0,
-    public b = 0,
-    public c = 0,
+    public a: number,
+    public b: number,
+    public c: number,
     public shape: Shape = 'triangle',
   ) {
-    if (a <= 0 || b <= 0 || c <= 0) {
-      throw new Error('the length of side is 0 or negative');
+    if (a <= 0) {
+      throw new Error('the length of side a is 0 or negative');
+    }
+
+    if (b <= 0) {
+      throw new Error('the length of side b is 0 or negative');
+    }
+
+    if (c <= 0) {
+      throw new Error('the length of side c is 0 or negative');
     }
 
     const maximal = Math.max(a, b, c);
 
     if (maximal >= a + b + c - maximal) {
-      throw new Error('wrong length');
+      throw new Error(
+        'The provided sides cannot form a valid triangle because they do not satisfy the triangle inequality theorem',
+      );
     }
   }
 
   getArea(): number {
     const s = 0.5 * (this.a + this.b + this.c);
 
-    return +Math.sqrt(s * (s - this.a) * (s - this.b) * (s - this.c)).toFixed(
-      2,
+    return (
+      Math.floor(
+        Math.sqrt(s * (s - this.a) * (s - this.b) * (s - this.c)) * 100,
+      ) / 100
     );
   }
 }
@@ -38,7 +51,7 @@ export class Triangle implements Figure {
 export class Circle implements Figure {
   constructor(
     public color: Color,
-    public r = 0,
+    public r: number,
     public shape: Shape = 'circle',
   ) {
     if (r <= 0) {
@@ -54,8 +67,8 @@ export class Circle implements Figure {
 export class Rectangle implements Figure {
   constructor(
     public color: Color,
-    public a = 0,
-    public b = 0,
+    public a: number,
+    public b: number,
     public shape: Shape = 'rectangle',
   ) {
     if (a <= 0 || b <= 0) {
@@ -64,7 +77,7 @@ export class Rectangle implements Figure {
   }
 
   getArea(): number {
-    return this.a * this.b;
+    return Math.floor(this.a * this.b * 100) / 100;
   }
 }
 
